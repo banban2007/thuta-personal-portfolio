@@ -5,6 +5,7 @@ import gsap from "gsap";
 import MenuLink from "./MenuLink";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Hover from "../Hover";
+import heroImg from '../../assets/images/hero.jpeg';
 
 export default function Menu() {
   const navigate = useNavigate();
@@ -129,6 +130,7 @@ export default function Menu() {
       onComplete: () => {
         startTransition(() => {
           navigate(href);
+          
         });
       }
     });
@@ -136,7 +138,7 @@ export default function Menu() {
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 w-full flex justify-between p-8 z-[100] uppercase font-bold text-sm transition-colors duration-500 
+      <nav className={`fixed top-0 left-0 w-full flex justify-between p-8 z-100 uppercase font-bold text-sm transition-colors duration-500 
         ${isOpen ? "text-white" : "text-[#1e1e1e]"}`}>
         <Hover
           text={isOpen ? "Close" : "Menu"}
@@ -161,8 +163,8 @@ export default function Menu() {
              </a>
           </div>
 
-          <div className="hidden lg:block w-40 aspect-[3/4] relative opacity-80">
-            <img src="/assets/hero.jpeg" alt="hero" className="w-full h-full object-contain" />
+          <div className="hidden lg:block w-40 aspect-3/4 relative opacity-80">
+            <img src={heroImg} alt="hero" className="w-full h-full object-contain" />
           </div>
 
           <div className="flex flex-col gap-0.5 text-right text-[0.65rem] lg:text-[0.8rem] font-bold uppercase">
