@@ -123,7 +123,8 @@ const Preloader = () => {
     }, "+=0.2");
 
     tl.to(".preloader-header-container", {
-      y: "2.5rem",
+      top: "-5rem",
+      y: 0,
       scale: 0.35,
       duration: 1.5,
       ease: "hop",
@@ -134,14 +135,14 @@ const Preloader = () => {
 
   return (
     <>
-      <div ref={containerRef} className="fixed inset-0 bg-[#0a0a0a] z-[100] overflow-hidden">
-        <div ref={progressBarRef} className="absolute top-0 left-0 w-full h-[4px] bg-white origin-left scale-x-0 z-[102]" />
+      <div ref={containerRef} className="fixed inset-0 bg-[#0a0a0a] z-100 overflow-hidden">
+        <div ref={progressBarRef} className="absolute top-0 left-0 w-full h-1 bg-white origin-left scale-x-0 z-102" />
 
         <div ref={counterRef} className="absolute top-10 right-10 text-white font-['Unbounded'] text-4xl opacity-40">
           {counter}%
         </div>
 
-        <div ref={imagesContainerRef} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[20rem] h-[28rem] md:w-[30rem] md:h-[35rem]">
+        <div ref={imagesContainerRef} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[20rem] h-112 md:w-120 md:h-140">
           {imageUrls.map((url, i) => (
             <div key={i} className="img-wrapper absolute inset-0 overflow-hidden" style={{ clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)' }}>
               <img
@@ -153,14 +154,14 @@ const Preloader = () => {
           ))}
         </div>
 
-        <div className="absolute bottom-16 left-1/2 -translate-x-1/2 w-[80%] md:w-[400px] text-white/70 text-center">
+        <div className="absolute bottom-16 left-1/2 -translate-x-1/2 w-[80%] md:w-100 text-white/70 text-center">
           <p ref={copyRef} className="uppercase text-[0.7rem] tracking-[0.2em] leading-relaxed">
             Art does not remove our struggles but transforms them into something we can hold.
           </p>
         </div>
       </div>
 
-      <div className="preloader-header-container fixed inset-x-0 top-0 h-screen flex justify-center items-center z-[101] pointer-events-none origin-top">
+      <div className="preloader-header-container absolute inset-x-0 top-0 h-screen flex justify-center items-center z-101 pointer-events-none origin-top">
         <h2 ref={headerRef} className="text-white font-['Unbounded'] text-5xl md:text-[8rem] font-bold uppercase tracking-[-0.05em]">
           Dorian Valez
         </h2>
