@@ -94,25 +94,40 @@ const Preloader = () => {
 
     tl.to(lines, { y: "-100%", opacity: 0, duration: 1, ease: "hop", stagger: 0.05 }, "-=1");
 
+    // 5. TT Merging Logic 
     tl.to(chars, {
-      yPercent: (i) => (i === 0 || i === chars.length - 1 ? 0 : (i % 2 === 0 ? -120 : 120)),
-      opacity: (i) => (i === 0 || i === chars.length - 1 ? 1 : 0),
+
+      yPercent: (i) => (i === 0 || i === 3 ? 0 : (i % 2 === 0 ? -120 : 120)),
+      opacity: (i) => (i === 0 || i === 3 ? 1 : 0),
       duration: 1.2,
       ease: "hop",
       onStart: () => {
-        // onStart ထဲမှာ ဒါမျိုးရေးပေးပါ
-   
-          const target = document.querySelector(".preloader-header-container");
-          if (target) {
-            gsap.set(target, { mixBlendMode: "difference" });
-          }
-    
-        const centerX = window.innerWidth / 2;
-        const firstRect = initialChar.getBoundingClientRect();
-        const lastRect = lastChar.getBoundingClientRect();
+        const target = document.querySelector(".preloader-header-container");
+        if (target) {
+          gsap.set(target, { mixBlendMode: "difference" });
+        }
 
-        gsap.to(initialChar, { x: centerX - firstRect.left - firstRect.width - 10, duration: 1.2, ease: "hop" });
-        gsap.to(lastChar, { x: centerX - lastRect.left + 10, duration: 1.2, ease: "hop" });
+        const centerX = window.innerWidth / 2;
+
+
+        const firstChar = chars[0];
+
+        const secondTChar = chars[3];
+
+        const firstRect = firstChar.getBoundingClientRect();
+        const secondRect = secondTChar.getBoundingClientRect();
+
+
+        gsap.to(firstChar, {
+          x: centerX - firstRect.left - firstRect.width - 2,
+          duration: 1.2,
+          ease: "hop"
+        });
+        gsap.to(secondTChar, {
+          x: centerX - secondRect.left + 2,
+          duration: 1.2,
+          ease: "hop"
+        });
       }
     }, "-=0.5");
 
@@ -156,14 +171,14 @@ const Preloader = () => {
 
         <div className="absolute bottom-16 left-1/2 -translate-x-1/2 w-[80%] md:w-100 text-white/70 text-center">
           <p ref={copyRef} className="uppercase text-[0.7rem] tracking-[0.2em] leading-relaxed">
-            Art does not remove our struggles but transforms them into something we can hold.
+            Defining the future through minimal design and complex logic.
           </p>
         </div>
       </div>
 
       <div className="preloader-header-container absolute inset-x-0 top-0 h-screen flex justify-center items-center z-101 pointer-events-none origin-top">
         <h2 ref={headerRef} className="text-white font-['Unbounded'] text-5xl md:text-[8rem] font-bold uppercase tracking-[-0.05em]">
-          Dorian Valez
+          ThuTa
         </h2>
       </div>
     </>
