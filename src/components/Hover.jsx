@@ -44,7 +44,7 @@ const Hover = ({ text, onClick, className = "" }) => {
             onClick={onClick}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
-            className={`relative overflow-hidden cursor-pointer h-4 flex items-center ${className}`}
+            className={`relative  overflow-hidden  transition cursor-pointer h-4 flex items-center ${className}`}
         >
             <div ref={topTextRef} className='flex'>
                 {letters.map((char, i) => (

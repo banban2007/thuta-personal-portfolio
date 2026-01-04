@@ -138,7 +138,7 @@ export default function Menu() {
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 w-full flex justify-between p-8 z-100 uppercase font-bold text-sm transition-colors duration-500 
+      <nav className={`fixed isolate top-0 left-0 w-full flex justify-between p-8 z-100 uppercase font-bold text-sm transition-colors duration-500 
         ${isOpen ? "text-white" : "text-[#1e1e1e]"}`}>
         <Hover
           text={isOpen ? "Close" : "Menu"}
