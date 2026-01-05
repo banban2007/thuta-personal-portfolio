@@ -70,7 +70,7 @@ export default function Identity() {
       <div className="container mx-auto px-8 lg:px-16 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         {/* Left Side: Content */}
         <div className="relative z-10">
-          <h4 className="text-[#fca311] font-bold uppercase tracking-widest mb-4 reveal-text">
+          <h4 className="text-[#e11010] font-bold uppercase tracking-widest mb-4 reveal-text">
             01. Who am I
           </h4>
           <h2 className="text-5xl lg:text-7xl font-bold text-[#1e1e1e] leading-[1.1] mb-8 reveal-text">
@@ -93,13 +93,13 @@ export default function Identity() {
         </div>
 
         {/* Right Side: Image with Parallax */}
-        <div className="relative flex justify-center lg:justify-end">
+        <div className="relative flex justify-center mt-10 md:mt-0 lg:justify-end">
           <div 
             ref={imageRef}
             className="w-full max-w-[450px] aspect-3/4  overflow-hidden shadow-2xl"
           >
             <img 
-              src='/human.JPG'
+              src='/human-2.jpg'
               alt="Identity" 
               className="w-full h-full object-contain scale-110 py-15"
             />

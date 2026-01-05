@@ -151,7 +151,7 @@ export default function Menu() {
       </nav>
 
       {/* Menu Overlay */}
-      <div ref={overlayRef} className="fixed inset-0 bg-[#1e1e1e] text-[#fca311] z-50 overflow-hidden select-none flex flex-col-reverse" style={{ clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)" }}>
+      <div ref={overlayRef} className="fixed inset-0 bg-[#1e1e1e] text-white z-50 overflow-hidden select-none flex flex-col-reverse" style={{ clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)" }}>
         <div ref={contentRef} className="relative lg:absolute -top-5 lg:top-[50%] lg:-translate-y-1/2 w-full px-8 lg:px-16 lg:pt-0 flex justify-between items-start opacity-0">
           <div className="flex flex-col gap-1 text-[0.65rem] lg:text-[0.8rem] font-bold uppercase">
              <Link to="/" className="flex justify-start w-full pb-2">
@@ -195,7 +195,7 @@ export default function Menu() {
                 onClick={() => handleClick(href)}
               />
             ))}
-            <div ref={highlighterRef} className="hidden lg:block absolute -bottom-2 left-0 h-2 bg-[#fca311] opacity-0 pointer-events-none" />
+            <div ref={highlighterRef} className="hidden lg:block absolute -bottom-2 left-0 h-2 bg-[#e11010] opacity-0 pointer-events-none" />
           </div>
         </div>
       </div>

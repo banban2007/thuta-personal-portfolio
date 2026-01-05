@@ -61,7 +61,7 @@ export default function MenuLink({
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
     >
-      <div className={`absolute left-0 top-7 -translate-y-1/2 w-1 h-[78%] bg-[#fca311] transition-all duration-300 lg:hidden ${isActive ? "opacity-100 scale-y-100" : "opacity-0 scale-y-0"}`} />
+      <div className={`absolute left-0 top-7 -translate-y-1/2 w-1 h-[78%] bg-[#e11010] transition-all duration-300 lg:hidden ${isActive ? "opacity-100 scale-y-100" : "opacity-0 scale-y-0"}`} />
 
       <div className="relative overflow-hidden inline-block">
         <Link
