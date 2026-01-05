@@ -1,8 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import heroImg from "../../src/assets/images/hero.jpeg"; 
-
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Identity() {
