@@ -138,8 +138,8 @@ export default function Menu() {
 
   return (
     <>
-      <nav className={`fixed isolate top-0 left-0 w-full flex justify-between p-8 z-100 uppercase font-bold text-sm transition-colors duration-500 
-        ${isOpen ? "text-white" : "text-[#1e1e1e]"}`}>
+      <nav className={`fixed top-0 left-0 w-full flex justify-between p-8 z-100 uppercase font-bold text-sm transition-colors duration-500 
+        ${isOpen ? "text-white" : "text-[#1e1e1e]"}`} >
         <Hover
           text={isOpen ? "Close" : "Menu"}
           onClick={() => dispatch(toggleMenu())}
@@ -199,8 +199,7 @@ export default function Menu() {
           </div>
         </div>
       </div>
-      
-      {/* "Shaping Idea" block ကို ဒီနေရာကနေ ဖယ်ထုတ်လိုက်ပါပြီ */}
+
     </>
   );
 }

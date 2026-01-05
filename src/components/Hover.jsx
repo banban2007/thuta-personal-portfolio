@@ -12,12 +12,14 @@ const Hover = ({ text, onClick, className = "" }) => {
             stagger: 0,
             duration: 0.4,
             ease: "power3.inOut",
+           mixBlendMode: "difference"
         });
         gsap.to(bottomTextRef.current.children, {
             y: "-100%",
             stagger: 0,
             duration: 0.4,
             ease: "power3.inOut",
+            mixBlendMode: "difference"
         });
     };
 
@@ -27,12 +29,14 @@ const Hover = ({ text, onClick, className = "" }) => {
             stagger: 0,
             duration: 0.4,
             ease: "power3.inOut",
+            mixBlendMode: "difference"
         });
         gsap.to(bottomTextRef.current.children, {
             y: "0%",
             stagger: 0,
             duration: 0.4,
             ease: "power3.inOut",
+            mixBlendMode: "difference"
         });
     };
 
@@ -48,7 +52,7 @@ const Hover = ({ text, onClick, className = "" }) => {
         >
             <div ref={topTextRef} className='flex'>
                 {letters.map((char, i) => (
-                    <span key={i} className='inline-block'>
+                    <span key={i} className='inline-block mix'>
                         {char === " " ? "\u00A0" : char}
                     </span>
                 ))}
@@ -56,7 +60,7 @@ const Hover = ({ text, onClick, className = "" }) => {
 
             <div ref={bottomTextRef} className='flex absolute top-full'>
                 {letters.map((char, i) => (
-                    <span key={i} className='inline-block'>
+                    <span key={i} className='inline-block mix'>
                         {char === " " ? "\u00A0" : char}
                     </span>
                 ))}

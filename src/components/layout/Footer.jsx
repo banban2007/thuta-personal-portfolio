@@ -12,7 +12,7 @@ const Footer = () => {
   const canvasRef = useRef(null);
   const footerRef = useRef(null);
   const wrapperRef = useRef(null);
-  const requestRef = useRef(); // Animation frame ကို track ရန်
+  const requestRef = useRef(); 
 
   useEffect(() => {
     // 1. Clock Logic (Optional - If needed)
@@ -105,7 +105,7 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer ref={footerRef} className="relative w-full h-[100vh] min-h-[700px] bg-[#0a0a0a] text-white overflow-hidden flex flex-col">
+    <footer ref={footerRef} className="relative w-full h-screen min-h-175 bg-[#0a0a0a] text-white overflow-hidden flex flex-col">
       <div ref={canvasRef} className="absolute inset-0 z-10 pointer-events-none" />
 
       <div ref={wrapperRef} className="relative h-full flex flex-col justify-between px-[6vw] py-10 md:py-16 z-20 pointer-events-none">

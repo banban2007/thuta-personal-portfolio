@@ -42,3 +42,7 @@ html.lenis {
 @keyframes noise {
   0% { transform: translate(0,0) } 10% { transform: translate(-5%,-5%) }
 }
+
+.mix{
+      mix-blend-mode: difference;
+}
