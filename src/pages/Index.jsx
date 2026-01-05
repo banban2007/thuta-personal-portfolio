@@ -3,6 +3,7 @@ import Preloader from '../components/Preloader'
 import { useSelector } from 'react-redux'
 import Hero from '../components/Hero'
 import Identity from './Identity'
+import Work from './Work'
 
 const Index = () => {
   const isFinished = useSelector((state) => state.loader.isfinished)
@@ -15,6 +16,8 @@ const Index = () => {
       </div>
 
       <Identity/>
+
+      <Work/>
     </main>
   )
 }

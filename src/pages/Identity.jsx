@@ -108,7 +108,6 @@ export default function Identity() {
         </div>
       </div>
 
-      {/* Stats Section အောက်နားလေးမှာ */}
      
     </section>
   );
