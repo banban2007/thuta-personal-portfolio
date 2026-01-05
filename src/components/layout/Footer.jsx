@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
+import Hover from "../Hover";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,7 +17,7 @@ const Footer = () => {
   useEffect(() => {
     // 1. Clock Logic (Optional - If needed)
     const updateClock = () => {
-        // dispatch logic here
+      // dispatch logic here
     };
 
     // 2. Lenis Smooth Scroll
@@ -37,10 +38,10 @@ const Footer = () => {
 
     let renderer;
     try {
-      renderer = new THREE.WebGLRenderer({ 
-        antialias: true, 
-        alpha: true, 
-        powerPreference: 'high-performance' 
+      renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        alpha: true,
+        powerPreference: 'high-performance'
       });
       renderer.setSize(container.clientWidth, container.clientHeight);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -106,7 +107,7 @@ const Footer = () => {
   return (
     <footer ref={footerRef} className="relative w-full h-[100vh] min-h-[700px] bg-[#0a0a0a] text-white overflow-hidden flex flex-col">
       <div ref={canvasRef} className="absolute inset-0 z-10 pointer-events-none" />
-      
+
       <div ref={wrapperRef} className="relative h-full flex flex-col justify-between px-[6vw] py-10 md:py-16 z-20 pointer-events-none">
         <div className="absolute top-[40%] md:top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-full flex flex-col items-center opacity-[0.03] md:opacity-[0.05]">
           <span className="font-['Unbounded'] text-[20vw] md:text-[16vw] font-black uppercase tracking-tighter text-transparent" style={{ WebkitTextStroke: '1px white' }}>Creative</span>
@@ -115,24 +116,31 @@ const Footer = () => {
 
         <div className="pointer-events-auto mt-10 md:mt-0">
           <h2 className="font-['Unbounded'] text-[clamp(1.75rem,7vw,5.5rem)] leading-[1.1] font-black uppercase">
-            <div>RESTORING</div>
-            <div>
-              <span className="text-[#ffa630]">MEANING</span> 
-              <span className="inline-block ml-2 md:ml-4">TO THE</span>
+            <div>LET'S SHAPE THE</div>
+            <div className="overflow-hidden mb-2">
+              <span className="text-[#ffa630]">FUTURE</span>
+              <span className="inline-block ml-0 md:ml-4 text-transparent" style={{ WebkitTextStroke: '1px white' }}>OF THE WEB</span>
             </div>
-            <div>
-              THINGS WE <span className="text-transparent" style={{ WebkitTextStroke: '1px white' }}>BUILD.</span>
+            <div className="overflow-hidden">
+              <span className="inline-block">TOGETHER.</span>
             </div>
           </h2>
         </div>
 
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-12 md:gap-0 pointer-events-auto">
-          <div className="flex flex-col gap-4">
-            <span className="text-[10px] opacity-40 tracking-[3px] uppercase">Explore Area</span>
-            <div className="flex flex-col gap-3">
-              {['Resumes', 'Orbit', 'Thoughts'].map((item, i) => (
-                <a key={item} href="#" className="flex items-center text-sm md:text-lg opacity-60 hover:opacity-100 hover:text-[#ffa630] transition-all">
-                  <span className="text-[9px] mr-3 opacity-40">0{i+1}.</span> {item}
+        {/* Info & Navigation */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-12 pointer-events-auto">
+          <div className="flex flex-col gap-6">
+            <span className="text-[10px] opacity-40 tracking-[4px] uppercase font-bold">Menu</span>
+            <div className="flex flex-col gap-4">
+              {[
+                { n: 'Curriculum Vitae', h: '/vitae' },
+                { n: 'Case Studies', h: '/studies' },
+                { n: 'Digital Archive', h: '/acrhive' }
+              ].map((item, i) => (
+                <a key={item.n} href={item.h} className="group flex items-center text-sm md:text-[16px] opacity-60 hover:opacity-100 transition-all">
+                  <span className="text-[9px] mr-3 opacity-40 group-hover:text-[#ffa630]">0{i + 1}.</span>
+                  {/* <span className="group-hover:translate-x-2 transition-transform duration-300">{item.n}</span> */}
+                  <Hover className='transition-transform duration-300 h-5' text={item.n} />
                 </a>
               ))}
             </div>
@@ -144,18 +152,30 @@ const Footer = () => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00ff88] opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00ff88]"></span>
               </span>
-              <span className="text-[9px] uppercase tracking-widest font-bold">Available for Work</span>
+              <span className="text-[9px] uppercase tracking-widest font-bold">Open for Collaboration</span>
             </div>
-            <div className="flex gap-6 text-[10px] md:text-sm font-semibold uppercase tracking-widest">
-              <a href="#" className="hover:text-[#ffa630]">Email</a>
-              <a href="#" className="hover:text-[#ffa630]">LinkedIn</a>
+            <div className="flex gap-6 text-[10px] md:text-sm font-semibold uppercase tracking-widest opacity-60">
+              <a target='_blank' href="mailto:heinhtoo421@gmail.com">
+                <Hover className='transition-transform duration-300 h-5' text={'Email'} />
+              </a>
+              <a target='_blank' href="/linkedini">
+                <Hover className='transition-transform duration-300 h-5' text={'LinkedIn'} />
+              </a>
+
+              <a target='_blank' href="/github">
+                <Hover className='transition-transform duration-300 h-5' text={'GitHub'} />
+              </a>
+              <a target='_blank' href="/facebook">
+                <Hover className='transition-transform duration-300 h-5' text={'Facebook'} />
+              </a>
+
             </div>
           </div>
         </div>
 
         <div className="flex justify-between items-center pt-6 border-t border-white/10 text-[8px] md:text-[9px] opacity-30 uppercase tracking-[2px] w-full">
           <p>© 2026 THUTA. ALL RIGHTS RESERVED.</p>
-          <p>YANGON, MYANMAR</p>
+          <p>CRAFTED WITH LOGIC & INTENTION</p>
         </div>
       </div>
     </footer>

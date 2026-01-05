@@ -7,7 +7,7 @@ const Index = () => {
   const isFinished = useSelector((state) => state.loader.isfinished)
   return (
     <main className=' relative min-h-screen bg-white'>
-      <Preloader />
+      {/* <Preloader /> */}
 
       <div className={isFinished ? "opacity-100 transition-opacity duration-1000" : "opacity-0"}>
         <Hero />

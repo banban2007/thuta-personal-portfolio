@@ -9,6 +9,7 @@ const Layout = () => {
     {/* <Transition/> */}
       <Menu />
       <main className="min-h-screen relative ">
+        
         <Outlet />
       </main>
       <Footer />

@@ -77,11 +77,11 @@ const Preloader = () => {
       }, i * 0.6);
     });
 
-    // 3. Text Entry (Loading ဆုံးခါနီးမှာ စာတွေဝင်လာမယ်)
+    // 3. Text Entry
     tl.to(lines, { yPercent: 0, opacity: 1, duration: 2, ease: "hop", stagger: 0.1 }, "-=1.5");
     tl.to(chars, { yPercent: 0, opacity: 1, duration: 1.2, ease: "hop", stagger: 0.02 }, "-=1.2");
 
-    // 4. Exit Phase (အောက်က Flow တွေက user ပေးထားတဲ့အတိုင်း မပြင်ပါဘူး)
+    // 4. Exit Phase]
     tl.to(progressBarRef.current, { transformOrigin: 'right', scaleX: 0, duration: 1, ease: "power3.in" });
     tl.to(counterRef.current, { y: -20, opacity: 0, duration: 0.5 }, "-=0.5");
 
@@ -150,7 +150,7 @@ const Preloader = () => {
 
   return (
     <>
-      <div ref={containerRef} className="fixed inset-0 bg-[#0a0a0a] z-100 overflow-hidden">
+      <div ref={containerRef} className="fixed inset-0 bg-[#0a0a0a] z-101 overflow-hidden">
         <div ref={progressBarRef} className="absolute top-0 left-0 w-full h-1 bg-white origin-left scale-x-0 z-102" />
 
         <div ref={counterRef} className="absolute top-10 right-10 text-white font-['Unbounded'] text-4xl opacity-40">

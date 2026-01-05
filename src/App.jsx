@@ -5,6 +5,7 @@ import Index from './pages/Index';
 import Identity from './pages/Identity';
 import Stack from './pages/Stack';
 import Work from './pages/Work';
+import Preloader from './components/Preloader';
 
 
 function App() {
@@ -12,6 +13,8 @@ function App() {
 
   return (
     <>
+
+    <Preloader/>
 
       <Routes location={location} key={location.pathname}>
         <Route path='/' element={<Layout/>}>
