@@ -176,7 +176,7 @@ const Preloader = () => {
         </div>
       </div>
 
-      <div className="preloader-header-container absolute inset-x-0 top-0 h-screen flex justify-center items-center z-101 pointer-events-none origin-top">
+      <div className="preloader-header-container fixed inset-x-0 top-0 h-screen flex justify-center items-center z-101 pointer-events-none origin-top">
         <h2 ref={headerRef} className="text-white font-['Unbounded'] text-5xl md:text-[8rem] font-bold uppercase tracking-[-0.05em]">
           ThuTa
         </h2>
