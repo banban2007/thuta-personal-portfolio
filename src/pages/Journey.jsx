@@ -1,12 +1,12 @@
 import React from 'react'
 import Transition from '../components/Transition'
 
-const Stack = () => {
+const Journey = () => {
   return (
     <Transition>
-      <div>Stack</div>
+      <div>Journey</div>
     </Transition>
   )
 }
 
-export default Stack
+export default Journey

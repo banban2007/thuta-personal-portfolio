@@ -11,7 +11,7 @@ export default function Menu() {
   const navigate = useNavigate();
   const location = useLocation();
   const pathname = location.pathname;
-  
+
   const activeLinkRef = useRef(null);
   const overlayRef = useRef(null);
   const contentRef = useRef(null);
@@ -122,31 +122,53 @@ export default function Menu() {
   const handleClick = (href) => {
     if (isPending) return;
     dispatch(toggleMenu());
-    
-    gsap.to("#transition-curtain", {
-      y: "0%",
-      duration: 0.6, 
-      ease: "power3.inOut",
-      onComplete: () => {
-        startTransition(() => {
-          navigate(href);
-          
-        });
-      }
-    });
+
+    startTransition(() => {
+      navigate(href);
+    })
   };
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 w-full flex justify-between p-8 z-100 uppercase font-bold text-sm transition-colors duration-500 
-        ${isOpen ? "text-white" : "text-[#1e1e1e]"}`} >
-        <Hover
-          text={isOpen ? "Close" : "Menu"}
+
+      <nav
+        style={{ mixBlendMode: 'difference' }}
+        className="fixed top-0 left-0 w-full flex justify-between p-8 z-100 uppercase font-bold text-sm text-white pointer-events-none"
+      >
+        <div
+          className="flex items-center gap-2 pointer-events-auto cursor-pointer group"
           onClick={() => dispatch(toggleMenu())}
-        />
-        <div className="flex items-center justify-center gap-2">
+        >
+          <Hover text={isOpen ? "Close" : "Menu"} />
+
+          <div className="relative w-3.5 h-3.5 flex items-center justify-center">
+            {/* Square Shape */}
+            <svg
+              className={`absolute inset-0 transition-all duration-500 ease-expo ${isOpen ? 'opacity-0 scale-50 rotate-90' : 'opacity-100 scale-100 rotate-0'}`}
+              width="14" height="14" viewBox="0 0 24 24"
+            >
+              <rect width="20" height="20" x="2" y="2" fill="currentColor" />
+            </svg>
+
+            {/* Heart Shape */}
+            <svg
+              className={`absolute inset-0 transition-all duration-500 ease-expo ${isOpen ? 'opacity-100 scale-100 rotate-0' : 'opacity-0 scale-50 -rotate-90'}`}
+              width="14" height="14" viewBox="0 0 24 24"
+            >
+              <path
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                fill="currentColor"
+              />
+            </svg>
+          </div>
+        </div>
+
+
+        <div className="flex items-center justify-center gap-2 pointer-events-auto">
           <Hover text="write" />
-          <svg width="12" height="12"><rect width="12" height="12" fill="currentColor" /></svg>
+          <svg width="12" height="12" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="50" fill="currentColor" />
+          </svg>
         </div>
       </nav>
 
@@ -154,13 +176,13 @@ export default function Menu() {
       <div ref={overlayRef} className="fixed inset-0 bg-[#1e1e1e] text-white z-50 overflow-hidden select-none flex flex-col-reverse" style={{ clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)" }}>
         <div ref={contentRef} className="relative lg:absolute -top-5 lg:top-[50%] lg:-translate-y-1/2 w-full px-8 lg:px-16 lg:pt-0 flex justify-between items-start opacity-0">
           <div className="flex flex-col gap-1 text-[0.65rem] lg:text-[0.8rem] font-bold uppercase">
-             <Link to="/" className="flex justify-start w-full pb-2">
-               <Hover text="ThuTa" className="text-xs" />
-             </Link>
-             <p className="text-xs">Mail</p>
-             <a href="mailto:thuta@gmail.com" className="flex justify-start w-full pb-2">
-               <Hover text="thuta@gmail.com" className="text-xs" />
-             </a>
+            <Link to="/" className="flex justify-start w-full pb-2">
+              <Hover text="ThuTa" className="text-xs" />
+            </Link>
+            <p className="text-xs">Mail</p>
+            <a href="mailto:thuta@gmail.com" className="flex justify-start w-full pb-2">
+              <Hover text="thuta@gmail.com" className="text-xs" />
+            </a>
           </div>
 
           <div className="hidden lg:block w-40 aspect-3/4 relative opacity-80">
@@ -168,11 +190,11 @@ export default function Menu() {
           </div>
 
           <div className="flex flex-col gap-0.5 text-right text-[0.65rem] lg:text-[0.8rem] font-bold uppercase">
-             {["Facebook", "Telegram", "Behance"].map(social => (
-               <a key={social} href={`#${social}`} className="flex justify-end w-full">
-                 <Hover text={social} className="text-xs" />
-               </a>
-             ))}
+            {["Facebook", "Telegram", "Behance"].map(social => (
+              <a key={social} href={`#${social}`} className="flex justify-end w-full">
+                <Hover text={social} className="text-xs" />
+              </a>
+            ))}
           </div>
         </div>
 

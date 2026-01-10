@@ -3,6 +3,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef, useState } from "react";
 import { Icon } from "@iconify/react";
+import Transition from "../components/Transition";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -175,106 +176,106 @@ const Work = () => {
   };
 
   return (
-    <section ref={containerRef} className="bg-white select-none relative overflow-hidden">
-      
-      {/* 1. Black Pinned Header Section */}
-      <div ref={headerRef} className="h-screen flex flex-col items-center justify-center relative bg-[#0f0f0f] overflow-hidden">
-        <div className="flex flex-col items-center text-center leading-[0.75] z-10">
-          <h2 className="title-featured text-[18vw] font-bold uppercase tracking-tighter text-white">
-            Featured
-          </h2>
-          <h2 className="title-projects text-[18vw] font-bold uppercase tracking-tighter text-transparent stroke-text">
-            Projects
-          </h2>
-        </div>
-        
-        {/* Scroll Hint Component */}
-        <div className="scroll-hint absolute bottom-12 flex flex-col items-center gap-4">
-          <span className="text-[10px] uppercase tracking-[0.5em] text-white/40 font-medium">Scroll to Discover</span>
-          <div className="w-[1px] h-20 bg-gradient-to-b from-white/60 to-transparent"></div>
-        </div>
-      </div>
 
-      {/* 2. White Project List Section */}
-      <div 
-        className="projects-container flex flex-col border-t border-black/10 relative z-20 bg-white" 
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-      >
-        {projects.map((project, index) => (
-          <div key={project.id} className="project-item flex flex-col border-b border-black/10 group">
-            
-            {/* Project Row */}
-            <div
-              onClick={() => window.innerWidth < 768 && setActiveMobile(activeMobile === index ? null : index)}
-              onMouseEnter={() => handleMouseEnter(index)}
-              className="relative flex items-center justify-between px-6 md:px-16 py-12 md:py-24 transition-colors duration-500 cursor-pointer group-hover:text-white"
-            >
-              {/* Black Reveal on Hover */}
-              <div className="absolute inset-0 bg-black scale-y-0 origin-bottom transition-transform duration-600 ease-[cubic-bezier(0.85,0,0.15,1)] group-hover:scale-y-100 -z-0" />
+    <Transition>
+      <section ref={containerRef} className="bg-white select-none relative overflow-hidden">
 
-              <div className="flex flex-col gap-5 relative z-10">
-                <span className="text-xs md:text-sm font-mono opacity-40 group-hover:opacity-60 transition-opacity">
-                  / 0{index + 1}
-                </span>
-                <h3 className="text-4xl md:text-8xl font-normal tracking-tight transition-transform duration-500 group-hover:translate-x-4 md:group-hover:translate-x-8">
-                  {project.name}
-                </h3>
-                <div className="flex flex-wrap gap-3 opacity-30 group-hover:opacity-100 transition-opacity duration-500 group-hover:translate-x-4 md:group-hover:translate-x-8">
-                  {project.frameworks.map((f) => (
-                    <span key={f.id} className="text-[9px] md:text-[11px] uppercase tracking-widest border border-current px-3 py-1 rounded-full">
-                      {f.name}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="relative z-10 transition-all duration-500 group-hover:-translate-x-4">
-                <Icon 
-                  icon="lucide:arrow-up-right" 
-                  className={`text-4xl md:text-7xl transition-transform duration-500 ${activeMobile === index ? "rotate-45" : "group-hover:rotate-45"}`} 
-                />
-              </div>
-            </div>
-
-            {/* Mobile View Content */}
-            <div 
-              className={`md:hidden overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.85,0,0.15,1)] bg-gray-50 ${
-                activeMobile === index ? "max-h-[650px] opacity-100 border-b border-black/5" : "max-h-0 opacity-0"
-              }`}
-            >
-              <div className="p-8 flex flex-col gap-8">
-                <p className="text-base text-gray-600 leading-relaxed font-light">{project.description}</p>
-                <div className="overflow-hidden rounded-xl shadow-lg">
-                   <img src={project.image} alt={project.name} className="w-full h-auto scale-105 transition-transform duration-700" />
-                </div>
-              </div>
-            </div>
+        {/* 1. Black Pinned Header Section */}
+        <div ref={headerRef} className="h-screen flex flex-col items-center justify-center relative bg-[#0f0f0f] overflow-hidden">
+          <div className="flex flex-col items-center text-center leading-[0.75] z-10">
+            <h2 className="title-featured text-[18vw] font-bold uppercase tracking-tighter text-white">
+              Featured
+            </h2>
+            <h2 className="title-projects text-[18vw] font-bold uppercase tracking-tighter text-transparent stroke-text">
+              Projects
+            </h2>
           </div>
-        ))}
-      </div>
 
-      {/* 3. Floating Preview (Mouse Follower) */}
-      <div
-        ref={previewRef}
-        className="fixed top-0 left-0 w-[500px] h-[320px] pointer-events-none z-[100] overflow-hidden rounded-2xl opacity-0 scale-50 -translate-x-1/2 -translate-y-1/2 shadow-[0_40px_80px_-15px_rgba(0,0,0,0.3)] border border-white/20 hidden md:block"
-      >
-        <div className="relative w-full h-full bg-neutral-100">
-          {projects.map((proj, i) => (
-            <img
-              key={i}
-              src={proj.image}
-              alt="preview"
-              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
-                currentIndex === i ? "opacity-100" : "opacity-0"
-              }`}
-            />
+          {/* Scroll Hint Component */}
+          <div className="scroll-hint absolute bottom-12 flex flex-col items-center gap-4">
+            <span className="text-[10px] uppercase tracking-[0.5em] text-white/40 font-medium">Scroll to Discover</span>
+            <div className="w-[1px] h-20 bg-gradient-to-b from-white/60 to-transparent"></div>
+          </div>
+        </div>
+
+        {/* 2. White Project List Section */}
+        <div
+          className="projects-container flex flex-col border-t border-black/10 relative z-20 bg-white"
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+        >
+          {projects.map((project, index) => (
+            <div key={project.id} className="project-item flex flex-col border-b border-black/10 group">
+
+              {/* Project Row */}
+              <div
+                onClick={() => window.innerWidth < 768 && setActiveMobile(activeMobile === index ? null : index)}
+                onMouseEnter={() => handleMouseEnter(index)}
+                className="relative flex items-center justify-between px-6 md:px-16 py-12 md:py-24 transition-colors duration-500 cursor-pointer group-hover:text-white"
+              >
+                {/* Black Reveal on Hover */}
+                <div className="absolute inset-0 bg-black scale-y-0 origin-bottom transition-transform duration-600 ease-[cubic-bezier(0.85,0,0.15,1)] group-hover:scale-y-100 -z-0" />
+
+                <div className="flex flex-col gap-5 relative z-10">
+                  <span className="text-xs md:text-sm font-mono opacity-40 group-hover:opacity-60 transition-opacity">
+                    / 0{index + 1}
+                  </span>
+                  <h3 className="text-4xl md:text-8xl font-normal tracking-tight transition-transform duration-500 group-hover:translate-x-4 md:group-hover:translate-x-8">
+                    {project.name}
+                  </h3>
+                  <div className="flex flex-wrap gap-3 opacity-30 group-hover:opacity-100 transition-opacity duration-500 group-hover:translate-x-4 md:group-hover:translate-x-8">
+                    {project.frameworks.map((f) => (
+                      <span key={f.id} className="text-[9px] md:text-[11px] uppercase tracking-widest border border-current px-3 py-1 rounded-full">
+                        {f.name}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="relative z-10 transition-all duration-500 group-hover:-translate-x-4">
+                  <Icon
+                    icon="lucide:arrow-up-right"
+                    className={`text-4xl md:text-7xl transition-transform duration-500 ${activeMobile === index ? "rotate-45" : "group-hover:rotate-45"}`}
+                  />
+                </div>
+              </div>
+
+              {/* Mobile View Content */}
+              <div
+                className={`md:hidden overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.85,0,0.15,1)] bg-gray-50 ${activeMobile === index ? "max-h-[650px] opacity-100 border-b border-black/5" : "max-h-0 opacity-0"
+                  }`}
+              >
+                <div className="p-8 flex flex-col gap-8">
+                  <p className="text-base text-gray-600 leading-relaxed font-light">{project.description}</p>
+                  <div className="overflow-hidden rounded-xl shadow-lg">
+                    <img src={project.image} alt={project.name} className="w-full h-auto scale-105 transition-transform duration-700" />
+                  </div>
+                </div>
+              </div>
+            </div>
           ))}
         </div>
-      </div>
 
-      {/* Text Stroke for Dark Background */}
-      <style jsx>{`
+        {/* 3. Floating Preview (Mouse Follower) */}
+        <div
+          ref={previewRef}
+          className="fixed top-0 left-0 w-[500px] h-[320px] pointer-events-none z-[100] overflow-hidden rounded-2xl opacity-0 scale-50 -translate-x-1/2 -translate-y-1/2 shadow-[0_40px_80px_-15px_rgba(0,0,0,0.3)] border border-white/20 hidden md:block"
+        >
+          <div className="relative w-full h-full bg-neutral-100">
+            {projects.map((proj, i) => (
+              <img
+                key={i}
+                src={proj.image}
+                alt="preview"
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${currentIndex === i ? "opacity-100" : "opacity-0"
+                  }`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Text Stroke for Dark Background */}
+        <style jsx>{`
         .stroke-text {
           -webkit-text-stroke: 1.5px rgba(255,255,255,0.2);
         }
@@ -282,7 +283,8 @@ const Work = () => {
           -webkit-text-stroke: 1.5px rgba(255,255,255,0.5);
         }
       `}</style>
-    </section>
+      </section>
+    </Transition>
   );
 };
 

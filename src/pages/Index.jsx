@@ -4,10 +4,14 @@ import { useSelector } from 'react-redux'
 import Hero from '../components/Hero'
 import Identity from './Identity'
 import Work from './Work'
+import Transition from '../components/Transition'
 
 const Index = () => {
   const isFinished = useSelector((state) => state.loader.isfinished)
   return (
+    <Transition>
+
+
     <main className=' relative min-h-screen bg-white'>
       {/* <Preloader /> */}
 
@@ -19,6 +23,7 @@ const Index = () => {
 
       <Work/>
     </main>
+    </Transition>
   )
 }
 

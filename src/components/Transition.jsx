@@ -1,28 +1,22 @@
-// components/Transition.jsx
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
+import { motion } from "framer-motion";
 
-const Transition = () => {
-  const curtainRef = useRef(null);
+const animations = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -20 },
+};
 
-  useEffect(() => {
-    // Page ပထမဆုံး Load ဖြစ်တဲ့အခါ (သို့) Refresh ဖြစ်တဲ့အခါ
-    // Curtain ကို အပေါ်ကို ဆွဲတင်ပြီး ဖွင့်ပေးလိုက်မယ်
-    gsap.to(curtainRef.current, {
-      y: "-100%",
-      duration: 0.8,
-      ease: "power4.inOut",
-      delay: 0.2
-    });
-  }, []);
-
+const Transition = ({ children }) => {
   return (
-    <div
-      id="transition-curtain"
-      ref={curtainRef}
-      className="fixed inset-0 w-full h-screen bg-[#fca311] z-[999] pointer-events-none"
-      style={{ transform: "translateY(100%)" }} // အောက်နားမှာ အဆင်သင့်ရှိနေမယ်
-    />
+    <motion.div
+      variants={animations}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {children}
+    </motion.div>
   );
 };
 

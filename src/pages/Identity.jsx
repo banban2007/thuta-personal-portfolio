@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Transition from "../components/Transition";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Identity() {
@@ -53,6 +54,8 @@ export default function Identity() {
   }, []);
 
   return (
+    <Transition>
+
     <section
       ref={sectionRef}
       className="relative min-h-screen bg-[#f1f1f1] py-24 overflow-hidden"
@@ -110,5 +113,6 @@ export default function Identity() {
 
      
     </section>
+    </Transition>
   );
 }
