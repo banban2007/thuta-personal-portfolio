@@ -119,14 +119,19 @@ export default function Menu() {
     }
   };
 
-  const handleClick = (href) => {
-    if (isPending) return;
-    dispatch(toggleMenu());
+ const handleClick = (href) => {
+  if (isPending || pathname === href) return;
 
+  // ၁။ အရင်ဆုံး Menu ကို ပိတ်လိုက်မယ်
+  dispatch(toggleMenu());
+
+  // ၂။ ခဏစောင့်ပြီးမှ (Menu ပိတ်တဲ့ animation ပြီးမှ) Page ပြောင်းမယ်
+  setTimeout(() => {
     startTransition(() => {
       navigate(href);
-    })
-  };
+    });
+  }, 500); // Menu ပိတ်တဲ့ အချိန်နဲ့ ညှိထားတာပါ
+};
 
   return (
     <>
@@ -204,7 +209,7 @@ export default function Menu() {
               ["/", "Index"],
               ["/identity", "Identity"],
               ["/work", "Work"],
-              ["/journey", "Journey"],
+              ["/process", "Process"],
               ["/stack", "Stack"],
             ].map(([href, text]) => (
               <MenuLink

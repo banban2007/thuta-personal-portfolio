@@ -6,7 +6,7 @@ import Identity from './pages/Identity';
 import Stack from './pages/Stack';
 import Work from './pages/Work';
 import Preloader from './components/Preloader';
-import Journey from './pages/Journey';
+import Process from './pages/Process';
 
 function App() {
   const location = useLocation();
@@ -14,15 +14,14 @@ function App() {
   return (
     <>
       <Preloader />
-      {/* exitBeforeEnter အစား mode="wait" ကိုသုံးပါ */}
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route path='/' element={<Layout />}>
             <Route index element={<Index />} />
-            <Route path="/identity" element={<Identity />} />
-            <Route path="/stack" element={<Stack />} />
-            <Route path="/journey" element={<Journey />} />
-            <Route path="/work" element={<Work />} />
+            <Route path="stack" element={<Stack />} />
+            <Route path="identity" element={<Identity />} />
+            <Route path="work" element={<Work />} />
+            <Route path="process" element={<Process />} />
           </Route>
         </Routes>
       </AnimatePresence>

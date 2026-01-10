@@ -56,7 +56,7 @@ const Footer = () => {
           <h2 className="font-['Unbounded'] text-[clamp(1.75rem,7vw,5.5rem)] leading-[1.1] font-black uppercase">
             <div>LET'S SHAPE THE</div>
             <div className="overflow-hidden mb-2">
-              <span className="text-[#ffa630]">FUTURE</span>
+              <span className="text-[#e11010]">FUTURE</span>
               <span className="inline-block ml-0 md:ml-4 text-transparent" style={{ WebkitTextStroke: '1px white' }}>OF THE WEB</span>
             </div>
             <div className="overflow-hidden">
@@ -76,7 +76,7 @@ const Footer = () => {
                 { n: 'Digital Archive', h: '/archive' }
               ].map((item, i) => (
                 <a key={item.n} href={item.h} className="group flex items-center text-sm md:text-[16px] opacity-60 hover:opacity-100 transition-all">
-                  <span className="text-[9px] mr-3 opacity-40 group-hover:text-[#ffa630]">0{i + 1}.</span>
+                  <span className="text-[9px] mr-3 opacity-40 group-hover:text-[#e11010]">0{i + 1}.</span>
                   <Hover className='h-5' text={item.n} />
                 </a>
               ))}

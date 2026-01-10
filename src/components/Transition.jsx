@@ -8,12 +8,14 @@ const animations = {
 
 const Transition = ({ children }) => {
   return (
-    <motion.div
-      variants={animations}
-      initial="initial"
-      animate="animate"
-      exit="exit"
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+ <motion.div
+      initial={{ y: 100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ 
+        duration: 0.8, 
+        delay: 0.4, // Curtain အပေါ်တက်သွားတဲ့အထိ ခဏစောင့်မယ်
+        ease: [0.33, 1, 0.68, 1] 
+      }}
     >
       {children}
     </motion.div>
