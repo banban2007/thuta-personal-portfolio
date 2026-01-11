@@ -63,23 +63,13 @@ const Stack = () => {
       Matter.World.add(world, body);
     });
 
-    // 5. Mouse Interaction (Updated for Mobile Scroll Fix)
+// 5. Mouse Interaction (Fully Fixed for Mobile Scroll)
     const mouse = Matter.Mouse.create(container);
     
-    // Matter.js ရဲ့ default touch event တွေကို scroll ရအောင် ဖယ်ထုတ်ခြင်း
+    // Matter.js ရဲ့ default event control တွေကို အကုန် disable လုပ်ပစ်တာပါ
     mouse.element.removeEventListener("touchstart", mouse.sourceEvents.touchstart);
     mouse.element.removeEventListener("touchmove", mouse.sourceEvents.touchmove);
     mouse.element.removeEventListener("touchend", mouse.sourceEvents.touchend);
-
-    // Scroll ကို ခွင့်ပြုမယ့် passive listener များ ပြန်ထည့်ခြင်း
-    mouse.element.addEventListener("touchstart", mouse.sourceEvents.touchstart, { passive: true });
-    mouse.element.addEventListener("touchmove", (e) => {
-      // Skill item ကို ဆွဲနေမှသာ scroll ကို တားဆီးပါမယ်
-      if (mouseConstraint.body) {
-        e.preventDefault();
-      }
-    }, { passive: false });
-    mouse.element.addEventListener("touchend", mouse.sourceEvents.touchend, { passive: true });
 
     const mouseConstraint = Matter.MouseConstraint.create(engine, {
       mouse: mouse,
@@ -88,6 +78,30 @@ const Stack = () => {
         render: { visible: false }
       }
     });
+
+    // Mobile မှာ Scroll ရအောင် Custom Listener ပြန်ထည့်ခြင်း
+    container.addEventListener("touchstart", (e) => {
+      const touch = e.touches[0];
+      const elementUnderTouch = document.elementFromPoint(touch.clientX, touch.clientY);
+      
+      // Skill item ကို ထိလိုက်မှသာ Matter.js mouse event ကို trigger လုပ်မယ်
+      if (elementUnderTouch && elementUnderTouch.classList.contains('skill-item')) {
+        mouse.sourceEvents.touchstart(e);
+      }
+    }, { passive: true });
+
+    container.addEventListener("touchmove", (e) => {
+      // Skill item တစ်ခုကို ကိုင်ထားမှသာ Scroll ကို ပိတ်ပြီး Item ကို ဆွဲမယ်
+      if (mouseConstraint.body) {
+        if (e.cancelable) e.preventDefault();
+        mouse.sourceEvents.touchmove(e);
+      }
+    }, { passive: false });
+
+    container.addEventListener("touchend", (e) => {
+      mouse.sourceEvents.touchend(e);
+    }, { passive: true });
+
     Matter.World.add(world, mouseConstraint);
 
     // 6. Animation Loop

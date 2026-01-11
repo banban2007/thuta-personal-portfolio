@@ -102,27 +102,28 @@ const projects = [
 ]
 
 
-
 const Work = () => {
   const containerRef = useRef(null);
-  const headerRef = useRef(null);
   const previewRef = useRef(null);
+  const headerRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(null);
+  const [activeMobile, setActiveMobile] = useState(null);
 
   const xTo = useRef();
   const yTo = useRef();
+  const rotateTo = useRef();
 
   useGSAP(() => {
-    // 1. Mouse Follower (Desktop Only)
+    // 1. Mouse Follower Logic
     if (window.innerWidth >= 768) {
-      xTo.current = gsap.quickTo(previewRef.current, "x", { duration: 0.5, ease: "power3" });
-      yTo.current = gsap.quickTo(previewRef.current, "y", { duration: 0.5, ease: "power3" });
+      xTo.current = gsap.quickTo(previewRef.current, "x", { duration: 0.4, ease: "power3.out" });
+      yTo.current = gsap.quickTo(previewRef.current, "y", { duration: 0.4, ease: "power3.out" });
+      rotateTo.current = gsap.quickTo(previewRef.current, "rotate", { duration: 0.4, ease: "power3.out" });
     }
 
-    // 2. Simple Header Animation
-    // Scroll ဆွဲရင် စာသားက အပေါ်ကို အနည်းငယ် တက်သွားပြီး မှိန်သွားမယ်
-    gsap.to(".header-text", {
-      y: -100,
+    // 2. Header Animation (New Minimalist Header အတွက်)
+    gsap.to(".header-text-content", {
+      y: -80,
       opacity: 0,
       scrollTrigger: {
         trigger: headerRef.current,
@@ -132,57 +133,69 @@ const Work = () => {
       }
     });
 
-    // 3. Projects Container Reveal (Smooth Fade In)
-    gsap.from(".projects-container", {
+    // 3. Project Items Entrance (အရင်အတိုင်း Fade up)
+    gsap.from(".project-item", {
+      y: 100,
       opacity: 0,
-      y: 50,
+      stagger: 0.1,
       duration: 1,
-      ease: "power2.out",
+      ease: "power4.out",
       scrollTrigger: {
         trigger: ".projects-container",
-        start: "top 90%",
-      }
+        start: "top 85%",
+      },
     });
-
   }, { scope: containerRef });
 
   const handleMouseMove = (e) => {
     if (window.innerWidth < 768) return;
-    xTo.current(e.clientX);
-    yTo.current(e.clientY);
+    const { clientX, clientY, movementX } = e;
+    const rotation = gsap.utils.clamp(-15, 15, movementX * 0.8);
+
+    xTo.current(clientX);
+    yTo.current(clientY);
+    rotateTo.current(rotation);
+  };
+
+  const handleMouseEnter = (index) => {
+    if (window.innerWidth < 768) return;
+    setCurrentIndex(index);
+    gsap.to(previewRef.current, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.2)" });
+  };
+
+  const handleMouseLeave = () => {
+    if (window.innerWidth < 768) return;
+    gsap.to(previewRef.current, { opacity: 0, scale: 0.5, duration: 0.4, ease: "power2.in" });
   };
 
   return (
     <Transition>
-      <section ref={containerRef} className="bg-white select-none">
+      <section ref={containerRef} className="bg-white select-none relative overflow-hidden">
 
-        {/* --- Refined Minimalist Header --- */}
-        <div
-          ref={headerRef}
+        {/* --- Header Section (Minimalist Style) --- */}
+        <div 
+          ref={headerRef} 
           className="h-[75vh] flex flex-col items-center justify-center bg-[#0a0a0a] text-white px-6 relative overflow-hidden"
         >
           <div className="absolute top-10 left-10 opacity-[0.03] select-none pointer-events-none hidden md:block">
             <span className="text-9xl font-black">CREATIVE</span>
           </div>
 
-          <div className="header-text w-full max-w-6xl relative">
-            {/* အပေါ်က Label အပိုင်း */}
-            <div className="flex items-center gap-4 mb-8 opacity-40 overflow-hidden">
+          <div className="header-text-content w-full max-w-6xl relative">
+            <div className="flex items-center gap-4 mb-8 opacity-40">
               <div className="w-12 h-[1px] bg-white"></div>
               <p className="text-[10px] md:text-xs font-mono tracking-[0.5em] uppercase">
                 Available for Freelance
               </p>
             </div>
 
-            {/* Main Title - Font weight ကို ကစားထားပါတယ် */}
             <h1 className="text-[15vw] md:text-[11vw] font-light leading-[0.85] tracking-tighter">
               Selected <br />
               <span className="font-serif italic text-neutral-400">Projects</span>
             </h1>
 
-            {/* အောက်ဘက်က အချက်အလက်လေးတွေ */}
             <div className="flex justify-between items-end mt-16">
-              <div className="max-w-[200px] hidden md:block">
+              <div className="max-w-[200px] hidden md:block text-left">
                 <p className="text-[10px] leading-relaxed opacity-30 uppercase tracking-widest">
                   A collection of digital experiences crafted with focus on aesthetics and function.
                 </p>
@@ -190,81 +203,107 @@ const Work = () => {
 
               <div className="flex flex-col items-center gap-6">
                 <div className="flex flex-col items-center gap-2">
-                  <span className="text-[9px] uppercase tracking-[0.3em] opacity-20">Scroll</span>
-                  {/* ရိုးရိုး Icon အစား Line လေးနဲ့ ပိုပြီး Clean ဖြစ်အောင် လုပ်ထားပါတယ် */}
-                  <div className="w-[1px] h-12 bg-gradient-to-b from-white/40 to-transparent relative overflow-hidden">
-                    <div className="absolute top-0 left-0 w-full h-full bg-white animate-scroll-line"></div>
-                  </div>
+                   <span className="text-[9px] uppercase tracking-[0.3em] opacity-20">Scroll</span>
+                   <div className="w-[1px] h-12 bg-gradient-to-b from-white/40 to-transparent relative overflow-hidden">
+                      <div className="absolute top-0 left-0 w-full h-full bg-white animate-scroll-line"></div>
+                   </div>
                 </div>
               </div>
-
+              
               <div className="hidden md:block">
                 <p className="text-xs font-mono opacity-20">© 2024</p>
               </div>
             </div>
           </div>
-
-          <style jsx>{`
-    @keyframes scroll-line {
-      0% { transform: translateY(-100%); }
-      100% { transform: translateY(100%); }
-    }
-    .animate-scroll-line {
-      animation: scroll-line 2s infinite cubic-bezier(0.19, 1, 0.22, 1);
-    }
-  `}</style>
         </div>
 
-        {/* --- Project List Section --- */}
+        {/* --- Project List Section (အရင်အတိုင်း Design) --- */}
         <div
-          className="projects-container relative z-20 bg-white"
+          className="projects-container flex flex-col border-t border-black/10 relative z-20 bg-white"
           onMouseMove={handleMouseMove}
-          onMouseLeave={() => gsap.to(previewRef.current, { opacity: 0, scale: 0.5 })}
+          onMouseLeave={handleMouseLeave}
         >
           {projects.map((project, index) => (
-            <div
-              key={project.id}
-              onMouseEnter={() => {
-                setCurrentIndex(index);
-                gsap.to(previewRef.current, { opacity: 1, scale: 1, duration: 0.3 });
-              }}
-              className="group border-b border-black/10"
-            >
-              <div className="relative flex items-center justify-between px-6 md:px-20 py-12 md:py-24 cursor-pointer overflow-hidden transition-colors duration-500 hover:text-white">
-                {/* Hover Background Reveal */}
-                <div className="absolute inset-0 bg-black translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)]" />
+            <div key={project.id} className="project-item flex flex-col border-b border-black/10 group">
 
-                <div className="relative z-10 flex flex-col gap-3">
-                  <span className="text-xs font-mono opacity-40 group-hover:opacity-60">/ 0{index + 1}</span>
-                  <h3 className="text-4xl md:text-7xl font-normal tracking-tight">
+              <div
+                onClick={() => window.innerWidth < 768 && setActiveMobile(activeMobile === index ? null : index)}
+                onMouseEnter={() => handleMouseEnter(index)}
+                className="relative flex items-center justify-between px-6 md:px-16 py-12 md:py-24 transition-colors duration-500 cursor-pointer group-hover:text-white"
+              >
+                {/* Black Reveal on Hover */}
+                <div className="absolute inset-0 bg-black scale-y-0 origin-bottom transition-transform duration-600 ease-[cubic-bezier(0.85,0,0.15,1)] group-hover:scale-y-100 -z-0" />
+
+                <div className="flex flex-col gap-5 relative z-10">
+                  <span className="text-xs md:text-sm font-mono opacity-40 group-hover:opacity-60 transition-opacity text-left">
+                    / 0{index + 1}
+                  </span>
+                  <h3 className="text-4xl md:text-8xl font-normal tracking-tight transition-transform duration-500 group-hover:translate-x-4 md:group-hover:translate-x-8 text-left">
                     {project.name}
                   </h3>
+                  <div className="flex flex-wrap gap-3 opacity-30 group-hover:opacity-100 transition-opacity duration-500 group-hover:translate-x-4 md:group-hover:translate-x-8">
+                    {project.frameworks.map((f) => (
+                      <span key={f.id} className="text-[9px] md:text-[11px] uppercase tracking-widest border border-current px-3 py-1 rounded-full">
+                        {f.name}
+                      </span>
+                    ))}
+                  </div>
                 </div>
 
-                <Icon
-                  icon="lucide:arrow-up-right"
-                  className="relative z-10 text-3xl md:text-5xl opacity-20 group-hover:opacity-100 group-hover:rotate-45 transition-all duration-500"
-                />
+                <div className="relative z-10 transition-all duration-500 group-hover:-translate-x-4">
+                  <Icon
+                    icon="lucide:arrow-up-right"
+                    className={`text-4xl md:text-7xl transition-transform duration-500 ${activeMobile === index ? "rotate-45" : "group-hover:rotate-45"}`}
+                  />
+                </div>
+              </div>
+
+              {/* Mobile View Content */}
+              <div
+                className={`md:hidden overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.85,0,0.15,1)] bg-gray-50 ${activeMobile === index ? "max-h-[650px] opacity-100 border-b border-black/5" : "max-h-0 opacity-0"
+                  }`}
+              >
+                <div className="p-8 flex flex-col gap-8">
+                  <p className="text-base text-gray-600 leading-relaxed font-light">{project.description}</p>
+                  <div className="overflow-hidden rounded-xl shadow-lg">
+                    <img src={project.image} alt={project.name} className="w-full h-auto scale-105 transition-transform duration-700" />
+                  </div>
+                </div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* --- Image Preview (Desktop Only) --- */}
+        {/* --- Floating Preview (Mouse Follower) --- */}
         <div
           ref={previewRef}
-          className="fixed top-0 left-0 w-[400px] h-[260px] pointer-events-none z-[100] opacity-0 scale-50 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-lg shadow-2xl hidden md:block"
+          className="fixed top-0 left-0 w-[500px] h-[320px] pointer-events-none z-[100] overflow-hidden rounded-2xl opacity-0 scale-50 -translate-x-1/2 -translate-y-1/2 shadow-2xl border border-white/20 hidden md:block"
         >
-          {projects.map((proj, i) => (
-            <img
-              key={i}
-              src={proj.image}
-              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${currentIndex === i ? "opacity-100" : "opacity-0"}`}
-              alt=""
-            />
-          ))}
+          <div className="relative w-full h-full bg-neutral-100">
+            {projects.map((proj, i) => (
+              <img
+                key={i}
+                src={proj.image}
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${currentIndex === i ? "opacity-100" : "opacity-0"
+                  }`}
+                alt="preview"
+              />
+            ))}
+          </div>
         </div>
 
+        <style jsx>{`
+          @keyframes scroll-line {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+          }
+          .animate-scroll-line {
+            animation: scroll-line 2s infinite cubic-bezier(0.19, 1, 0.22, 1);
+          }
+          .stroke-text {
+            -webkit-text-stroke: 1.5px rgba(255,255,255,0.2);
+          }
+        `}</style>
       </section>
     </Transition>
   );
