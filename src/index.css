@@ -46,3 +46,10 @@ html.lenis {
 .mix{
       mix-blend-mode: difference;
 }
+
+.header-content {
+  will-change: transform;
+}
+.projects-container {
+  will-change: transform;
+}

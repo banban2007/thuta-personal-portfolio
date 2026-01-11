@@ -8,7 +8,6 @@ import Transition from '../components/Transition';
 gsap.registerPlugin(ScrollTrigger);
 
 const Stack = () => {
-  const sceneRef = useRef(null);
   const containerRef = useRef(null);
   const engineRef = useRef(Matter.Engine.create());
 
@@ -30,12 +29,12 @@ const Stack = () => {
     // 2. Physics Config
     const engine = engineRef.current;
     const world = engine.world;
-    engine.gravity.y = 1.5; // Gravity အနည်းငယ် တိုးထားသည်
+    engine.gravity.y = 1.5;
 
     const container = containerRef.current;
     const { width, height } = container.getBoundingClientRect();
 
-    // 3. Walls (Static Bodies)
+    // 3. Walls
     const wallThickness = 100;
     const floor = Matter.Bodies.rectangle(width / 2, height + wallThickness / 2, width, wallThickness, { isStatic: true });
     const leftWall = Matter.Bodies.rectangle(-wallThickness / 2, height / 2, wallThickness, height * 2, { isStatic: true });
@@ -50,7 +49,7 @@ const Stack = () => {
     skillElements.forEach((el, i) => {
       const rect = el.getBoundingClientRect();
       const x = Math.random() * (width - 100) + 50;
-      const y = -500 - (i * 150); // တစ်ခုချင်းစီ ကွာပြီး ကျလာအောင်
+      const y = -500 - (i * 150);
 
       const body = Matter.Bodies.rectangle(x, y, rect.width, rect.height, {
         restitution: 0.6,
@@ -64,8 +63,24 @@ const Stack = () => {
       Matter.World.add(world, body);
     });
 
-    // 5. Mouse Interaction
+    // 5. Mouse Interaction (Updated for Mobile Scroll Fix)
     const mouse = Matter.Mouse.create(container);
+    
+    // Matter.js ရဲ့ default touch event တွေကို scroll ရအောင် ဖယ်ထုတ်ခြင်း
+    mouse.element.removeEventListener("touchstart", mouse.sourceEvents.touchstart);
+    mouse.element.removeEventListener("touchmove", mouse.sourceEvents.touchmove);
+    mouse.element.removeEventListener("touchend", mouse.sourceEvents.touchend);
+
+    // Scroll ကို ခွင့်ပြုမယ့် passive listener များ ပြန်ထည့်ခြင်း
+    mouse.element.addEventListener("touchstart", mouse.sourceEvents.touchstart, { passive: true });
+    mouse.element.addEventListener("touchmove", (e) => {
+      // Skill item ကို ဆွဲနေမှသာ scroll ကို တားဆီးပါမယ်
+      if (mouseConstraint.body) {
+        e.preventDefault();
+      }
+    }, { passive: false });
+    mouse.element.addEventListener("touchend", mouse.sourceEvents.touchend, { passive: true });
+
     const mouseConstraint = Matter.MouseConstraint.create(engine, {
       mouse: mouse,
       constraint: {
@@ -75,13 +90,11 @@ const Stack = () => {
     });
     Matter.World.add(world, mouseConstraint);
 
-    // 6. Animation Loop (GSAP Ticker for performance)
+    // 6. Animation Loop
     const runner = Matter.Runner.create();
-    
     const update = () => {
       bodies.forEach(({ body, element }) => {
         const { x, y } = body.position;
-        // GSAP သုံးပြီး Smooth ဖြစ်အောင် position sync လုပ်သည်
         gsap.set(element, {
           x: x - element.offsetWidth / 2,
           y: y - element.offsetHeight / 2,
@@ -90,7 +103,6 @@ const Stack = () => {
       });
     };
 
-    // Scroll Trigger နဲ့ အောက်ရောက်မှ Physics စတင်မည်
     ScrollTrigger.create({
       trigger: container,
       start: "top 80%",
@@ -101,7 +113,6 @@ const Stack = () => {
       once: true
     });
 
-    // Cleanup
     return () => {
       Matter.Engine.clear(engine);
       Matter.Runner.stop(runner);
@@ -113,39 +124,38 @@ const Stack = () => {
   return (
     <Transition>
       <div className="bg-white text-black min-h-screen">
- 
-        {/* Physics Section */}
         <section 
           ref={containerRef}
           className="relative h-screen w-full bg-[#0f0f0f] overflow-hidden border-t border-white/10"
+          style={{ touchAction: 'pan-y' }} // Mobile မှာ vertical scroll ရစေရန်
         >
-          {/* Background Text */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <h2 className="text-[10vw] font-black text-white/5 uppercase select-none">
               Play with Skills
             </h2>
           </div>
 
-          {/* Skill Items */}
           {skills.map((skill, index) => (
             <div 
               key={index}
               className="skill-item absolute px-6 py-3 bg-white text-black rounded-full font-bold text-xl md:text-2xl shadow-xl cursor-grab active:cursor-grabbing select-none whitespace-nowrap border-2 border-black/10"
-              style={{ left: 0, top: 0, visibility: 'visible' }}
+              style={{ 
+                left: 0, 
+                top: 0, 
+                visibility: 'visible',
+                touchAction: 'none' // Item တွေကို ကိုင်ဆွဲရုံသီးသန့်
+              }}
             >
               {skill}
             </div>
           ))}
 
-          {/* Bottom Content */}
           <div className="absolute bottom-10 left-0 w-full text-center pointer-events-none">
             <p className="text-white/40 uppercase tracking-widest text-sm">
               Grab them, toss them, stack them.
             </p>
           </div>
         </section>
-
-       
       </div>
     </Transition>
   );
