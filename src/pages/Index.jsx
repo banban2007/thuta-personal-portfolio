@@ -2,11 +2,12 @@ import React from 'react'
 import Preloader from '../components/Preloader'
 import { useSelector } from 'react-redux'
 import Hero from '../components/Hero'
-import Identity from './Identity'
-import Process from './Process'
-import Work from './Work'
 import Transition from '../components/Transition'
-import Stack from './Stack'
+
+import IdentitySection from '../components/IdentitySection'
+import WorkSection from '../components/WorkSection'
+import ProcessSection from '../components/ProcessSection'
+import StackSection from '../components/StackSection'
 
 const Index = () => {
   const isFinished = useSelector((state) => state.loader.isfinished)
@@ -16,10 +17,10 @@ const Index = () => {
       <div className={isFinished ? "opacity-100 transition-opacity duration-1000" : "opacity-0"}>
         <Hero />
       </div>
-      <Identity/>
-      <Work/>
-      <Process/>
-      <Stack/>
+      <IdentitySection/>
+      <WorkSection/>
+      <ProcessSection/>
+      <StackSection/>
     </main>
     </Transition>
   )

@@ -7,6 +7,7 @@ import Stack from './pages/Stack';
 import Work from './pages/Work';
 import Preloader from './components/Preloader';
 import Process from './pages/Process';
+import WorkDetail from './pages/WorkDetail';
 
 function App() {
   const location = useLocation();
@@ -21,6 +22,8 @@ function App() {
             <Route path="stack" element={<Stack />} />
             <Route path="identity" element={<Identity />} />
             <Route path="work" element={<Work />} />
+            <Route path="/project/:id" element={<WorkDetail />} />
+
             <Route path="process" element={<Process />} />
           </Route>
         </Routes>
